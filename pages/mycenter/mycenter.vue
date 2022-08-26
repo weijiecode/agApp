@@ -3,7 +3,9 @@
 		<view :style="{ height: iStatusBarHeight + 'px'}" class="stat"></view>
 		<view class="topuser">
 			<view class="leftphoto">
-				<image src="/static/testphoto.JPG" class="photo"></image>
+				<image :src="photo" class="photo" v-if="photo!=null"></image>
+				<image class="photo" src="/static/photo.png" mode=""
+					v-if="photo==null || photo==''"></image>
 			</view>
 			<view class="rightp">
 				<view class="nickname">
@@ -93,6 +95,8 @@
 				iStatusBarHeight: 0,
 				// 当前登录用户id
 				userId: '',
+				// 用户头像
+				photo: '',
 				// 用户昵称
 				nickname: '',
 				// 用户简介
@@ -102,26 +106,32 @@
 		onLoad() {
 			// 获取状态栏高度
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight
+		},
+		async onShow() {
+			// 页面一加载获取昵称、简介和头像
 			uni.getStorage({
 				key: 'userId',
 				success: (res) =>  {
 					this.userId = res.data
+					this.showData()
 				}
 			})
-		},
-		async mounted() {
-			// 页面一加载获取昵称和简介
-			const res = await this.$http({
-				url: 'account/userdata',
-				method: 'POST',
-				data: {
-					id: this.userId
-				}
-			})
-			this.nickname = res.data.data.nickname
-			this.introduction = res.data.data.introduction
 		},
 		methods: {
+			// 获取用户昵称、简介和头像数据
+			async showData() {
+				await this.$http({
+					url: 'account/userdata',
+					method: 'POST',
+					data: {
+						id: this.userId
+					}
+				}).then( res => {
+					this.photo = res.data.data.photo
+					this.nickname = res.data.data.nickname
+					this.introduction = res.data.data.introduction
+				})
+			},
 			// 退出
 			out() {
 				// 跳转到登录界面

@@ -6,7 +6,7 @@
 			<view class="zhanwei"></view>
 		</view>
 		<view class="userdata">
-			<u--form labelPosition="right" :model="userdata" labelWidth="80px">
+			<u--form labelPosition="left" :model="userdata" labelWidth="80px">
 				<u-form-item label="用户名" borderBottom>
 					<u--input v-model="userdata.username" border="none"></u--input>
 				</u-form-item>
