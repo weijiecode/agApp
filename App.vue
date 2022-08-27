@@ -15,6 +15,6 @@
 <style lang="scss">
 	@import "@/uni_modules/uview-ui/index.scss";
 	uni-page-body {
-		height: 100%;
+		// height: 100%;
 	}
 </style>
