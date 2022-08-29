@@ -1,4 +1,5 @@
-const BASE_URL = 'http://192.168.2.106:5001/' //接口地址
+const BASE_URL = 'http://localhost:5001/' //接口地址
+// const BASE_URL = 'http://192.168.43.24:5001/'
 export const http = (options) => {
 	return new Promise((resolve, reject) => {
 		uni.request({

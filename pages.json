@@ -32,7 +32,7 @@
 		}, {
 			"path": "pages/shopping/shopping",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "购物车",
 				"enablePullDownRefresh": false
 			}
 
@@ -56,7 +56,31 @@
 				}
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/details/details",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": false
+				}
+            }
+            
+        }
+		,{
+		    "path" : "pages/search/search",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": false
+				}
+		    }
+		    
+		}
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
