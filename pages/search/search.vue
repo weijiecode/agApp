@@ -1,16 +1,10 @@
 <template>
 	<view class="content">
 		<view :style="{ height: iStatusBarHeight + 'px'}" class="stat"></view>
-		<!-- 搜索框 -->
-		<view class="topbox">
+		<view class="topmenu" :style="{ marginTop: iStatusBarHeight + 'px'}">
 			<image src="/static/back.png" class="back" @click="back"></image>
-			<view class="topsearch" :style="{ marginTop: iStatusBarHeight + 'px'}">
-				<view class="u-demo-block__content">
-					<view class="u-page__tag-item">
-						<u-search searchIconSize="45" height="75" @custom="search" v-model="searchtext"></u-search>
-					</view> 
-				</view>
-			</view>
+			<p>产品详情</p>
+			<view class="zhanwei"></view>
 		</view>
 		<!-- 搜索列表 -->
 		<!-- 总产品列表 -->
@@ -18,37 +12,20 @@
 			<view class="allitem">
 				搜索结果列表
 			</view>
-			<view class="oneshoping" @click="todetails">
-				<image src="/static/yumi.JPG" class="shopimg"></image>
+			<view class="oneshoping" @click="todetails(item.id)" v-for="item in newArry" :key="item.id" v-if="item.status =='1'">
+				<image :src="item.photo" class="shopimg"></image>
 				<view class="alltext">
 					<view class="onetitle">
-						水果玉米10斤新鲜现摘
+						{{item.title}}
 					</view>
 					<view class="onecontent">
-						糯玉米 真空包装新鲜甜玉米
+						{{item.content}}
 					</view>
 					<view class="oneprice">
-						<span>￥</span>28.8
+						<span>￥</span>{{item.price}}
 					</view>
 					<view class="shopname">
-						生鲜水果旗舰店铺
-					</view>
-				</view>
-			</view>
-			<view class="oneshoping">
-				<image src="/static/yumi.JPG" class="shopimg"></image>
-				<view class="alltext">
-					<view class="onetitle">
-						水果玉米10斤新鲜现摘
-					</view>
-					<view class="onecontent">
-						糯玉米 真空包装新鲜甜玉米
-					</view>
-					<view class="oneprice">
-						<span>￥</span>28.8
-					</view>
-					<view class="shopname">
-						生鲜水果旗舰店铺
+						{{item.merchantid}}
 					</view>
 				</view>
 			</view>
@@ -64,11 +41,37 @@
 				iStatusBarHeight: 0,
 				// 搜索关键字
 				searchtext: '',
+				// 产品数据
+				shopDataList: [],
+				// 获取店铺名称
+				shopNameList: [],
+				// 搜索后的数据
+				newArry: []
 			}
 		},
-		onLoad() {
+		onLoad(option) {
+			this.searchtext = option.value
 			// 获取状态栏高度
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight
+			
+			this.getShopNameData().then(() => {
+				this.getShopData().then(() => {
+					this.shopDataList.forEach((item,index) => {
+						this.shopNameList.forEach((subitem,subindex) => {
+							if(item.merchantid == subitem.id) {
+								this.shopDataList[index].merchantid = subitem.shopname
+							}
+						})
+					})
+				}).then(() => {
+					this.shopDataList.forEach(item => {
+						if(item.title.indexOf(this.searchtext)>=0){
+							this.newArry.push(item)
+						}
+					})
+				})
+			})
+			
 		},
 		methods: {
 			// 搜索
@@ -80,7 +83,34 @@
 				uni.switchTab({
 					url: "/pages/index/index"
 				})
-			}
+			},
+			// 获取产品列表
+			async getShopData() {
+				const res = await this.$http({
+					url: 'shop/admincommodity',
+					method: 'POST'
+				})
+				if(res.data.code === 200) {
+					this.shopDataList = res.data.data
+				}
+			},
+			// 获取店铺名称
+			async getShopNameData() {
+				const res = await this.$http({
+					url: 'shop/shopname',
+					method: 'POST'
+				})
+				console.log(res)
+				if(res.data.code === 200) {
+					this.shopNameList = res.data.data
+				}
+			},
+			// 跳转到商品详情页
+			todetails(id) {
+				uni.navigateTo({
+					url: "/pages/details/details?id="+id
+				})
+			},
 		}
 	}
 </script>
@@ -120,6 +150,11 @@
 	.allimg {
 		width: 40rpx;
 		height: 40rpx;
+	}
+	
+	.topmenu {
+		display: flex;
+		justify-content: space-between;
 	}
 	
 	.oneshoping {
@@ -182,5 +217,11 @@
 	.topbox {
 		display: flex;
 		align-items: center;
+	}
+	
+	.zhanwei {
+		width: 20px;
+		height: 20px;
+		padding-right: 40rpx;
 	}
 </style>

@@ -5,7 +5,7 @@
 		<view class="topsearch" :style="{ marginTop: iStatusBarHeight + 'px'}">
 			<view class="u-demo-block__content">
 				<view class="u-page__tag-item">
-					<u-search searchIconSize="45" height="75" @custom="search" v-model="searchtext"></u-search>
+					<u-search searchIconSize="45" height="75" @custom="search"></u-search>
 				</view>     
 			</view>
 		</view>
@@ -32,37 +32,20 @@
 			<view class="allitem">
 				<image src="/static/all.png" class="allimg"></image>全部农产品
 			</view>
-			<view class="oneshoping" @click="todetails">
-				<image src="/static/yumi.JPG" class="shopimg"></image>
+			<view class="oneshoping" @click="todetails(item.id)" v-for="item in shopDataList" :key="item.id" v-if="item.status =='1'">
+				<image :src="item.photo" class="shopimg"></image>
 				<view class="alltext">
 					<view class="onetitle">
-						水果玉米10斤新鲜现摘
+						{{item.title}}
 					</view>
 					<view class="onecontent">
-						糯玉米 真空包装新鲜甜玉米
+						{{item.content}}
 					</view>
 					<view class="oneprice">
-						<span>￥</span>28.8
+						<span>￥</span>{{item.price}}
 					</view>
 					<view class="shopname">
-						生鲜水果旗舰店铺
-					</view>
-				</view>
-			</view>
-			<view class="oneshoping">
-				<image src="/static/yumi.JPG" class="shopimg"></image>
-				<view class="alltext">
-					<view class="onetitle">
-						水果玉米10斤新鲜现摘
-					</view>
-					<view class="onecontent">
-						糯玉米 真空包装新鲜甜玉米
-					</view>
-					<view class="oneprice">
-						<span>￥</span>28.8
-					</view>
-					<view class="shopname">
-						生鲜水果旗舰店铺
+						{{item.merchantid}}
 					</view>
 				</view>
 			</view>
@@ -77,33 +60,70 @@
 			return {
 				// 状态栏高度
 				iStatusBarHeight: 0,
-				// 搜索关键字
-				searchtext: '',
 				// 轮播图图片
 				moreimg: [
 					'/static/lunbo1.jpeg',
 					'/static/lunbo2.jpeg',
 					'/static/lunbo3.jpeg',
-				]
+				],
+				// 产品数据
+				shopDataList: [],
+				// 获取店铺名称
+				shopNameList: []
 			}
 		},
 		onLoad() {
 			// 获取状态栏高度
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight
 		},
+		onShow() {
+			this.getShopNameData().then(() => {
+				this.getShopData().then(() => {
+					console.log(this.shopDataList)
+					this.shopDataList.forEach((item,index) => {
+						this.shopNameList.forEach((subitem,subindex) => {
+							if(item.merchantid == subitem.id) {
+								this.shopDataList[index].merchantid = subitem.shopname
+							}
+						})
+					})
+				})
+			})
+		},
 		methods: {
 			// 搜索
 			search(value) {
 				console.log(value)
 				uni.navigateTo({
-					url: "/pages/search/search"
+					url: "/pages/search/search?value="+value
 				})
 			},
 			// 跳转到商品详情页
-			todetails() {
+			todetails(id) {
 				uni.navigateTo({
-					url: "/pages/details/details"
+					url: "/pages/details/details?id="+id
 				})
+			},
+			// 获取产品列表
+			async getShopData() {
+				const res = await this.$http({
+					url: 'shop/admincommodity',
+					method: 'POST'
+				})
+				if(res.data.code === 200) {
+					this.shopDataList = res.data.data
+				}
+			},
+			// 获取店铺名称
+			async getShopNameData() {
+				const res = await this.$http({
+					url: 'shop/shopname',
+					method: 'POST'
+				})
+				console.log(res)
+				if(res.data.code === 200) {
+					this.shopNameList = res.data.data
+				}
 			}
 		}
 	}

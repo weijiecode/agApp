@@ -9,30 +9,32 @@
 		<image src="/static/yumi.JPG" class="topimg"></image>
 		<view class="subcontent">
 			<view class="oneprice">
-				<span style="font-size: 16px;">￥</span>28.8
+				<span style="font-size: 16px;">￥</span>{{price}}
 			</view>
 			<view class="onetitle">
-				水果玉米10斤新鲜现摘
+				{{title}}
 			</view>
 			<view class="shopname">
 				<image src="/static/shopindex.png" class="lefticon"></image>
-				<span>生鲜水果旗舰店铺</span>
+				<span>{{shopname}}</span>
 				<u-button style="margin-left: 6rpx;width: 110rpx;" size="mini" shape="circle" color="#6C8E1E" plain
 					text="已关注"></u-button>
 			</view>
 			<view class="onecontent">
-				糯玉米 真空包装新鲜甜玉米
+				{{content}}
 			</view>
 		</view>
 		<view class="bottom">
 			<view class="rightbox">
-				<view class="onebox">
+				<view class="onebox" @click="addshopcart">
 					加入购物车
 				</view>
 				<view class="twobox">
 					立即购买
 				</view>
 			</view>
+		</view>
+		<view class="zhanwei1">
 		</view>
 	</view>
 </template>
@@ -43,17 +45,77 @@
 			return {
 				// 状态栏高度
 				iStatusBarHeight: 0,
+				// 该产品id
+				id: '',
+				// 产品标题
+				title: '',
+				// 产品内容
+				content: '',
+				// 产品价格
+				price: '',
+				// 产品图片
+				photo: '',
+				// 产品店铺
+				shopname: '',
+				// 店铺id
+				merchantid: ''
+				
 			}
 		},
-		onLoad() {
+		onLoad(option) {
+			this.id = option.id
 			// 获取状态栏高度
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight
+			this.getShop().then(() => {
+				this.getShopNameData()
+			})
 		},
 		methods: {
 			// 返回到首页
 			back() {
 				uni.switchTab({
 					url: "/pages/index/index"
+				})
+			},
+			// 获取指定id的产品
+			async getShop() {
+				const res = await this.$http({
+					url: 'shop/selectshop',
+					method: 'POST',
+					data: {
+						id: this.id
+					}
+				})
+				console.log(res)
+				this.title = res.data.data[0].title
+				this.content = res.data.data[0].content
+				this.price = res.data.data[0].price
+				this.photo = res.data.data[0].photo
+				this.merchantid = res.data.data[0].merchantid
+			},
+			// 获取店铺名称
+			async getShopNameData() {
+				const res = await this.$http({
+					url: 'shop/shopname',
+					method: 'POST'
+				})
+				console.log(res)
+				if(res.data.code === 200) {
+					res.data.data.forEach(item => {
+						if(item.id == this.merchantid){
+							this.shopname = item.shopname
+						}
+					})
+				}
+			},
+			// 添加产品到购物车
+			async addshopcart() {
+				const res = await this.$http({
+					url: 'shop/addshopcart',
+					method: 'POST',
+					// data: {
+					// 	commodityid: 
+					// }
 				})
 			}
 		}
@@ -184,5 +246,14 @@
 		border-top-right-radius: 50rpx;
 		border-bottom-right-radius: 50rpx;
 		background-color: #ff5722;
+	}
+	
+	.zhanwei1 {
+		z-index: -1;
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		height: 500px;
+		background-color: #f7f7f7;
 	}
 </style>
