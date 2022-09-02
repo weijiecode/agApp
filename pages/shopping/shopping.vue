@@ -121,7 +121,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.allthings {
 		margin-top: 20rpx;
 		background-color: #fff;

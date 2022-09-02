@@ -96,7 +96,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.stat {
 		background-color: #f7f7f7;
 		position: fixed;

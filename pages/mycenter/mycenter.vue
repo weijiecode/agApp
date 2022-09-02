@@ -22,7 +22,7 @@
 				<u-button @click="personupdata" size="mini" shape="circle" color="#6C8E1E" plain text="编辑个人资料"></u-button>
 			</view>
 		</view>
-		<view class="menus">
+<!-- 		<view class="menus">
 			<view class="oneitem">
 				<image src="/static/zhifu.png" class="subicon"></image>
 				<view class="subtext">
@@ -47,27 +47,27 @@
 					评价
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="subcontent">
-			<view class="twoitem">
+			<view @click="btncollect" class="twoitem">
 				<image src="/static/shoucang.png" class="subtwophoto"></image>
 				<view class="subtwotext">
 					商品收藏
 				</view>
 			</view>
-			<view class="twoitem">
+			<view @click="btnattention" class="twoitem">
 				<image src="/static/dianpu.png" class="subtwophoto"></image>
 				<view class="subtwotext">
 					店铺关注
 				</view>
 			</view>
-			<view class="twoitem">
+			<view @click="btnaddress" class="twoitem">
 				<image src="/static/dizhi.png" class="subtwophoto"></image>
 				<view class="subtwotext">
 					收货地址
 				</view>
 			</view>
-			<view class="twoitem" style="border-bottom: 1px solid #fff;">
+			<view @click="btnsetting" class="twoitem" style="border-bottom: 1px solid #fff;">
 				<image src="/static/shezhi.png" class="subtwophoto"></image>
 				<view class="subtwotext">
 					设置
@@ -145,6 +145,30 @@
 			personupdata() {
 				uni.navigateTo({
 					url: '/pages/personupdata/personupdata'
+				})
+			},
+			// 跳转到收藏界面
+			btncollect() {
+				uni.navigateTo({
+					url: '/pages/collect/collect'
+				})
+			},
+			// 跳转到关注界面
+			btnattention() {
+				uni.navigateTo({
+					url: '/pages/attention/attention'
+				})
+			},
+			// 跳转到地址界面
+			btnaddress() {
+				uni.navigateTo({
+					url: '/pages/address/address'
+				})
+			},
+			// 跳转到设置界面
+			btnsetting() {
+				uni.navigateTo({
+					url: '/pages/setting/setting'
 				})
 			}
 		}

@@ -19,12 +19,12 @@
 				<image src="/static/tuijian.png" class="tuijian"></image>推荐农产品
 			</view>
 			<view class="twoitem">
-				<image class="img1" src="/static/yumi.JPG" mode=""></image>
-				<image class="img2" src="/static/lunbo3.jpeg" mode=""></image>
+				<image class="img1" :src="shopDataList[0].photo" mode=""></image>
+				<image class="img2" :src="shopDataList[1].photo" mode=""></image>
 			</view>
 			<view class="twoitem">
-				<image class="img3" src="/static/lunbo1.jpeg" mode=""></image>
-				<image class="img4" src="/static/yumi.JPG" mode=""></image>
+				<image class="img3" :src="shopDataList[2].photo" mode=""></image>
+				<image class="img4" :src="shopDataList[3].photo" mode=""></image>
 			</view>
 		</view>
 		<!-- 总产品列表 -->
@@ -129,7 +129,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.stat {
 		background-color: #f7f7f7;
 		position: fixed;
