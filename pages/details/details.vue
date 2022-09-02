@@ -29,13 +29,15 @@
 				<view class="onebox" @click="addshopcart">
 					加入购物车
 				</view>
-				<view class="twobox">
+				<view class="twobox" @click="pay">
 					立即购买
 				</view>
 			</view>
 		</view>
 		<view class="zhanwei1">
 		</view>
+		<!-- 提示信息 -->
+		<u-notify ref="uNotify"></u-notify>
 	</view>
 </template>
 
@@ -58,8 +60,9 @@
 				// 产品店铺
 				shopname: '',
 				// 店铺id
-				merchantid: ''
-				
+				merchantid: '',
+				// 用户id
+				userid: ''
 			}
 		},
 		onLoad(option) {
@@ -110,12 +113,40 @@
 			},
 			// 添加产品到购物车
 			async addshopcart() {
+				this.userid = uni.getStorageSync('userId');
 				const res = await this.$http({
 					url: 'shop/addshopcart',
 					method: 'POST',
-					// data: {
-					// 	commodityid: 
-					// }
+					data: {
+						commodityid: this.id,
+						userid: this.userid
+					}
+				})
+				console.log(res)
+				if(res.data.code === 200) {
+					this.$refs.uNotify.show({
+						message: '加入购物车成功',
+						type: 'success',
+						color: '#ffffff',
+						bgColor: '',
+						fontSize: 25,
+						duration: 3000
+					})
+				}else {
+					this.$refs.uNotify.show({
+						message: '加入购物车失败',
+						type: 'error',
+						color: '#ffffff',
+						bgColor: '',
+						fontSize: 25,
+						duration: 3000
+					})
+				}
+			},
+			// 跳转到结算页面并将价格传过去
+			pay() {
+				uni.navigateTo({
+					url: '/pages/pay/pay?types=1&price=' + this.price
 				})
 			}
 		}
