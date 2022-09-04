@@ -158,7 +158,7 @@
 			// 跳转到结算页面并将价格传过去
 			pay() {
 				uni.navigateTo({
-					url: '/pages/pay/pay?types=1&price=' + this.price
+					url: '/pages/pay/pay?types=1&price=' + this.price+'&id='+this.id
 				})
 			},
 			// 获取用户是否收藏

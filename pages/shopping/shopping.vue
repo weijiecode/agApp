@@ -39,7 +39,9 @@
 				// 对应用户购物车数据
 				newshoppingCartData: [],
 				// 总价格
-				price: 0
+				price: 0,
+				// 购物车所有产品的id（数组）
+				ids: []
 			}
 		},
 		onLoad() {
@@ -92,8 +94,6 @@
 					})
 
 					if (res1.data.code === 200) {
-						console.log('!!')
-						console.log(res1.data.data)
 						this.shopDataList = res1.data.data
 						console.log(this.shoppingCartData)
 						this.shopDataList.forEach(item => {
@@ -101,7 +101,6 @@
 							this.shoppingCartData.forEach((subitem, index) => {
 								if (subitem.commodityid == item.id) {
 									this.newshoppingCartData.push(item)
-									console.log('@')
 								}
 							})
 						})
@@ -113,8 +112,12 @@
 			},
 			// 跳转到结算页面并将价格传过去
 			pay() {
+				console.log(this.newshoppingCartData)
+				this.newshoppingCartData.forEach(item => {
+					this.ids.push(item.id)
+				})
 				uni.navigateTo({
-					url: '/pages/pay/pay?types=0&price=' + this.price
+					url: '/pages/pay/pay?types=0&price=' + this.price+'&id='+JSON.stringify(this.ids)
 				})
 			}
 		}

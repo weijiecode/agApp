@@ -9,6 +9,12 @@
 		<view class="pay">
 			<p class="title">需支付金额</p>
 			<p class="subtitle">￥{{price}}</p>
+			<u--input
+			    placeholder="输入备注"
+			    border="bottom"
+			    clearable
+				v-model="remark"
+			  ></u--input>
 			<u-button style="width:80%;margin-top: 20px;" type="success" text="立即支付" @click="topay"></u-button>
 		</view>
 		<!-- 提示信息 -->
@@ -22,47 +28,102 @@
 			return {
 				//  用户id
 				userid: '',
+				// 用户地址
+				address: '',
 				// 状态栏高度
 				iStatusBarHeight: 0,
 				// 价格
 				price: 0,
+				// 备注
+				remark: '',
 				// 判断是从商品页支付还是购物车支付（从details商品页面跳转过来则不需要清空购物车数据）
-				types: '0'
+				types: '0',
+				// 产品id
+				id: '',
+				// 购物车传参过来的数组id
+				ids: []
 			}
 		},
 		onLoad(option) {
 			this.types = option.types
 			this.price = option.price
+			if (this.types == '1') {
+				this.id = option.id
+			} else {
+				this.ids = JSON.parse(option.id)
+			}
 			// 获取状态栏高度
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight
 			this.userid = uni.getStorageSync('userId');
+			this.address = uni.getStorageSync('address');
 		},
 		methods: {
 			// 返回到购物车
 			back() {
 				// 如果从购物车点击的支付则返回的页面是购物车
-				if(this.types == '0'){
+				if (this.types == '0') {
 					uni.switchTab({
 						url: "/pages/shopping/shopping"
 					})
-				}else {
+				} else {
 					// 如果从一个商品跳转的支付页面则直接返回到该商品页
 					uni.navigateBack()
 				}
 			},
 			// 支付
 			async topay() {
-				// 如果从购物车点击的支付则清除数据库该用户的所有加入购物车的数据
-				if(this.types === '0'){
-					const res = await this.$http({
+				// 如果从购物车点击的支付则循环遍历存储支付记录
+				if (this.types === '0') {
+					this.ids.forEach(async item => {
+						const res = await this.$http({
+							url: 'shop/addpay',
+							method: 'POST',
+							data: {
+								commodityId: item,
+								userId: this.userid,
+								address: this.address,
+								remark: this.remark
+							}
+						})
+						console.log(res)
+						if (res.data.code === 200) {
+							this.$refs.uNotify.show({
+								message: '支付成功',
+								type: 'success',
+								color: '#ffffff',
+								bgColor: '',
+								fontSize: 25,
+								duration: 3000
+							})
+						}
+					})
+					const delres = await this.$http({
 						url: 'shop/delshopcart',
 						method: 'POST',
 						data: {
 							userid: this.userid
 						}
 					})
-					console.log(res)
-					if(res.data.code === 200) {
+					console.log(delres)
+					setTimeout(() => {
+						uni.switchTab({
+							url: "/pages/shopping/shopping"
+						})
+					}, 1500)
+				} else {
+					// 从商品页支付
+					const res1 = await this.$http({
+						url: 'shop/addpay',
+						method: 'POST',
+						data: {
+							commodityId: this.id,
+							userId: this.userid,
+							address: this.address,
+							remark: this.remark
+						}
+					})
+					console.log(res1)
+					if (res1.data.code === 200) {
 						this.$refs.uNotify.show({
 							message: '支付成功',
 							type: 'success',
@@ -72,24 +133,9 @@
 							duration: 3000
 						})
 						setTimeout(() => {
-							uni.switchTab({
-								url: "/pages/shopping/shopping"
-							})
-						},1500)
+							uni.navigateBack()
+						}, 1500)
 					}
-				}else {
-					// 从商品页支付的则直接提示支付成功并跳转到上一个页面
-					this.$refs.uNotify.show({
-						message: '支付成功',
-						type: 'success',
-						color: '#ffffff',
-						bgColor: '',
-						fontSize: 25,
-						duration: 3000
-					})
-					setTimeout(() => {
-						uni.navigateBack()
-					},1500)
 				}
 			}
 		}
@@ -117,24 +163,24 @@
 		height: 20px;
 		padding-left: 40rpx;
 	}
-	
+
 	.zhanwei {
 		width: 20px;
 		height: 20px;
 		padding-right: 40rpx;
 	}
-	
-	.title{
-		    text-align: center;
-		    font-size: 20px;
-		    margin-top: 20px;
-		    font-weight: bold;
+
+	.title {
+		text-align: center;
+		font-size: 20px;
+		margin-top: 20px;
+		font-weight: bold;
 	}
-	
+
 	.subtitle {
-		    text-align: center;
-		    font-size: 24px;
-		    margin-top: 20px;
-		    font-weight: bold;
+		text-align: center;
+		font-size: 24px;
+		margin-top: 20px;
+		font-weight: bold;
 	}
 </style>

@@ -7,17 +7,17 @@
 			<view class="zhanwei"></view>
 		</view>
 		<view class="addressshow">
-			<u-popup :show="show">
+			<u-popup closeOnClickOverlay @close="show=false" :show="show">
 				<view>
 					<u--textarea v-model="address" confirmType="done" placeholder="请输入详细地址"></u--textarea>
 				</view>
 				<u-button @click="saveAddress" style="width: 30%;margin-top: 30px;" type="primary" text="保存提交">
 				</u-button>
 			</u-popup>
-			<u-button @click="show=true" style="width: 30%;margin-top: 30px;" v-if="!address" type="primary"
+			<u-button @click="show=true" style="width: 30%;margin-top: 30px;" v-if="!address || address==''" type="primary"
 				text="添加地址"></u-button>
 			<view class="text">{{address}}</view>
-			<u-button type="error" text="删除" v-if="address" @click="deladdress"></u-button>
+			<u-button type="error" text="删除" v-if="address || address!=''" @click="deladdress"></u-button>
 		</view>
 		<!-- 提示信息 -->
 		<u-notify ref="uNotify"></u-notify>
@@ -79,6 +79,7 @@
 				})
 				console.log(res)
 				if (res.data.code === 200) {
+					uni.setStorageSync('address', this.address);
 					this.show = false
 					this.$refs.uNotify.show({
 						message: '保存地址成功',
@@ -106,7 +107,8 @@
 					url: 'shop/deladdress',
 					method: 'POST',
 					data: {
-						userId: this.userid
+						userId: this.userid,
+						address: ''
 					}
 				})
 				console.log(res)
