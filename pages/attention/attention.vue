@@ -51,11 +51,10 @@
 					url: 'shop/shopname',
 					method: 'POST'
 				})
-				console.log(res)
 				if (res.data.code === 200) {
 					this.shopNameList = res.data.data
 					const res1 = await this.$http({
-						url: 'shop/selectallcollect',
+						url: 'shop/selectallattention',
 						method: 'POST',
 						data: {
 							userId: this.userid
@@ -64,7 +63,7 @@
 					if (res1.data.code === 200) {
 						this.shopNameList.forEach(item => {
 							res1.data.data.forEach(subitem => {
-								if (item.id == subitem.commodityId) {
+								if (item.id == subitem.merchantId) {
 									this.newArry.push(item)
 								}
 							})
