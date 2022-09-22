@@ -11,7 +11,7 @@
 		</view>
 		<view class="subcontent">
 			{{itemdata.content}}
-		</view>
+		</view> 
 	</view>
 </template>
 
