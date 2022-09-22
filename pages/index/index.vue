@@ -19,12 +19,12 @@
 				<image src="/static/tuijian.png" class="tuijian"></image>推荐农产品
 			</view>
 			<view class="twoitem">
-				<image class="img1" src="/static/yumi.JPG" mode=""></image>
-				<image class="img2" src="/static/lunbo3.jpeg" mode=""></image>
+				<image class="img1" @click="todetails(subitem1.id)" :src="subitem1.photo"></image>
+				<image class="img2" @click="todetails(subitem2.id)" :src="subitem2.photo"></image>
 			</view>
 			<view class="twoitem">
-				<image class="img3" src="/static/lunbo1.jpeg" mode=""></image>
-				<image class="img4" src="/static/yumi.JPG" mode=""></image>
+				<image class="img3" @click="todetails(subitem3.id)" :src="subitem3.photo"></image>
+				<image class="img4" @click="todetails(subitem4.id)" :src="subitem4.photo"></image>
 			</view>
 		</view>
 		<!-- 总产品列表 -->
@@ -69,7 +69,24 @@
 				// 产品数据
 				shopDataList: [],
 				// 获取店铺名称
-				shopNameList: []
+				shopNameList: [],
+				// 推荐产品
+				subitem1: {
+					id: '',
+					photo: ''
+				},
+				subitem2: {
+					id: '',
+					photo: ''
+				},
+				subitem3: {
+					id: '',
+					photo: ''
+				},
+				subitem4: {
+					id: '',
+					photo: ''
+				}
 			}
 		},
 		onLoad() {
@@ -87,6 +104,12 @@
 							}
 						})
 					})
+				}).then(() => {
+					this.subitem1 = this.shopDataList[0]
+					this.subitem2 = this.shopDataList[1]
+					this.subitem3 = this.shopDataList[2]
+					this.subitem4 = this.shopDataList[3]
+					console.log(this.subitem1)
 				})
 			})
 		},
@@ -129,7 +152,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.stat {
 		background-color: #f7f7f7;
 		position: fixed;

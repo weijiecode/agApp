@@ -6,7 +6,7 @@
 			<p>产品详情</p>
 			<view class="zhanwei"></view>
 		</view>
-		<image src="/static/yumi.JPG" class="topimg"></image>
+		<image :src="photo" class="topimg"></image>
 		<view class="subcontent">
 			<view class="oneprice">
 				<span style="font-size: 16px;">￥</span>{{price}}
@@ -17,8 +17,8 @@
 			<view class="shopname">
 				<image src="/static/shopindex.png" class="lefticon"></image>
 				<span>{{shopname}}</span>
-				<u-button style="margin-left: 6rpx;width: 110rpx;" size="mini" shape="circle" color="#6C8E1E" plain
-					text="已关注"></u-button>
+				<u-button @click="btnattention" style="margin-left: 6rpx;width: 110rpx;" size="mini" shape="circle" color="#6C8E1E" plain
+					:text="isattention"></u-button>
 			</view>
 			<view class="onecontent">
 				{{content}}
@@ -26,16 +26,20 @@
 		</view>
 		<view class="bottom">
 			<view class="rightbox">
+				<image @click="btncollect" src="/static//sc.png" class="sc"></image>
+				<p @click="btncollect" style="margin-right: 80px;font-size: 14px;color: #2c2c2c;">{{iscollect}}</p>
 				<view class="onebox" @click="addshopcart">
 					加入购物车
 				</view>
-				<view class="twobox">
+				<view class="twobox" @click="pay">
 					立即购买
 				</view>
 			</view>
 		</view>
 		<view class="zhanwei1">
 		</view>
+		<!-- 提示信息 -->
+		<u-notify ref="uNotify"></u-notify>
 	</view>
 </template>
 
@@ -58,17 +62,28 @@
 				// 产品店铺
 				shopname: '',
 				// 店铺id
-				merchantid: ''
-				
+				merchantid: '',
+				// 用户id
+				userid: '',
+				// 显示是否收藏
+				iscollect: '收藏',
+				// 显示是否关注
+				isattention: '关注'
 			}
 		},
 		onLoad(option) {
-			this.id = option.id
+			this.id = option.id*1
+			this.userid = uni.getStorageSync('userId');
 			// 获取状态栏高度
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight
 			this.getShop().then(() => {
 				this.getShopNameData()
+				// 获取该用户是否收藏该商品
+				this.getcollect()
+				this.getattention()
 			})
+			
+			
 		},
 		methods: {
 			// 返回到首页
@@ -91,7 +106,8 @@
 				this.content = res.data.data[0].content
 				this.price = res.data.data[0].price
 				this.photo = res.data.data[0].photo
-				this.merchantid = res.data.data[0].merchantid
+				this.merchantid = res.data.data[0].merchantid*1
+				console.log('@')
 			},
 			// 获取店铺名称
 			async getShopNameData() {
@@ -113,11 +129,136 @@
 				const res = await this.$http({
 					url: 'shop/addshopcart',
 					method: 'POST',
-					// data: {
-					// 	commodityid: 
-					// }
+					data: {
+						commodityid: this.id,
+						userid: this.userid
+					}
 				})
-			}
+				console.log(res)
+				if(res.data.code === 200) {
+					this.$refs.uNotify.show({
+						message: '加入购物车成功',
+						type: 'success',
+						color: '#ffffff',
+						bgColor: '',
+						fontSize: 25,
+						duration: 3000
+					})
+				}else {
+					this.$refs.uNotify.show({
+						message: '加入购物车失败',
+						type: 'error',
+						color: '#ffffff',
+						bgColor: '',
+						fontSize: 25,
+						duration: 3000
+					})
+				}
+			},
+			// 跳转到结算页面并将价格传过去
+			pay() {
+				uni.navigateTo({
+					url: '/pages/pay/pay?types=1&price=' + this.price+'&id='+this.id
+				})
+			},
+			// 获取用户是否收藏
+			async getcollect() {
+				console.log(this.userid)
+				console.log(this.id)
+				const res = await this.$http({
+					url: 'shop/selectcollect',
+					method: 'POST',
+					data: {
+						userId: this.userid,
+						commodityId: this.id
+					}
+				})
+				console.log(res)
+				if(res.data.code === 200){
+					this.iscollect = '已收藏'
+				}else {
+					this.iscollect = '收藏'
+				}
+			},
+			// 点击收藏
+			async btncollect() {
+				// 如果当前是已收藏的状态则发送收藏的网络请求
+				if(this.iscollect == '收藏'){
+					const res = await this.$http({
+						url: 'shop/addcollect',
+						method: 'POST',
+						data: {
+							userId: this.userid,
+							commodityId: this.id
+						}
+					})
+					if(res.data.code === 200){
+						this.iscollect = '已收藏'
+					}
+				}else {
+					// 如果当前是未收藏的状态则发送取消收藏的网络请求
+					const res1 = await this.$http({
+						url: 'shop/delcollect',
+						method: 'POST',
+						data: {
+							userId: this.userid,
+							commodityId: this.id
+						}
+					})
+					if(res1.data.code === 200){
+						this.iscollect = '收藏'
+					}
+				}
+			},
+			// 获取用户是否关注
+			async getattention() {
+				console.log(this.userid)
+				console.log(this.merchantid)
+				const res = await this.$http({
+					url: 'shop/selectattention',
+					method: 'POST',
+					data: {
+						userId: this.userid,
+						merchantId: this.merchantid
+					}
+				})
+				console.log(res)
+				if(res.data.code === 200){
+					this.isattention = '已关注'
+				}else {
+					this.isattention = '关注'
+				}
+			},
+			// 点击关注
+			async btnattention() {
+				// 如果当前是已关注的状态则发送关注的网络请求
+				if(this.isattention == '关注'){
+					const res = await this.$http({
+						url: 'shop/addattention',
+						method: 'POST',
+						data: {
+							userId: this.userid,
+							merchantId: this.merchantid
+						}
+					})
+					if(res.data.code === 200){
+						this.isattention = '已关注'
+					}
+				}else {
+					// 如果当前是关注的状态则发送取消关注的网络请求
+					const res1 = await this.$http({
+						url: 'shop/delattention',
+						method: 'POST',
+						data: {
+							userId: this.userid,
+							merchantId: this.merchantid
+						}
+					})
+					if(res1.data.code === 200){
+						this.isattention = '关注'
+					}
+				}
+			},
 		}
 	}
 </script>
@@ -149,6 +290,11 @@
 		width: 20px;
 		height: 20px;
 		padding-left: 40rpx;
+	}
+	
+	.sc {
+		width: 20px;
+		height: 20px;
 	}
 
 	.zhanwei {
@@ -205,6 +351,7 @@
 
 	.rightbox {
 		display: flex;
+		align-items: center;
 	}
 
 	span {
