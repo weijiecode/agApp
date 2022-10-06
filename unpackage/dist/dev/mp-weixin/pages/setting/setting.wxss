@@ -1,0 +1,27 @@
+
+.stat.data-v-9543fcb0 {
+		background-color: #f7f7f7;
+		position: fixed;
+		z-index: 1;
+		height: 25px; /* --status-bar-height系统状态栏高度
+ */
+		width: 100%;
+		top: 0;
+		left: 0;
+}
+.topmenu.data-v-9543fcb0 {
+		display: flex;
+		justify-content: space-between;
+}
+.back.data-v-9543fcb0 {
+		width: 20px;
+		height: 20px;
+		padding-left: 40rpx;
+}
+.zhanwei.data-v-9543fcb0 {
+		width: 20px;
+		height: 20px;
+		padding-right: 40rpx;
+}
+
+

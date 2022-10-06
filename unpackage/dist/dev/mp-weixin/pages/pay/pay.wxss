@@ -1,0 +1,37 @@
+
+.stat.data-v-c10d0c50 {
+	background-color: #f7f7f7;
+	position: fixed;
+	z-index: 1;
+	height: 25px; /* --status-bar-height系统状态栏高度 */
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+.topmenu.data-v-c10d0c50 {
+	display: flex;
+	justify-content: space-between;
+}
+.back.data-v-c10d0c50 {
+	width: 20px;
+	height: 20px;
+	padding-left: 40rpx;
+}
+.zhanwei.data-v-c10d0c50 {
+	width: 20px;
+	height: 20px;
+	padding-right: 40rpx;
+}
+.title.data-v-c10d0c50 {
+	text-align: center;
+	font-size: 20px;
+	margin-top: 20px;
+	font-weight: bold;
+}
+.subtitle.data-v-c10d0c50 {
+	text-align: center;
+	font-size: 24px;
+	margin-top: 20px;
+	font-weight: bold;
+}
+

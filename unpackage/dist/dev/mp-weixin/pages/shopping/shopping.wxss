@@ -1,0 +1,77 @@
+
+.allthings.data-v-24f06b86 {
+	margin-top: 20rpx;
+	background-color: #fff;
+	padding: 30rpx;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+}
+.allimg.data-v-24f06b86 {
+	width: 40rpx;
+	height: 40rpx;
+}
+.oneshoping.data-v-24f06b86 {
+	display: flex;
+	margin-top: 30rpx;
+}
+.shopimg.data-v-24f06b86 {
+	width: 240rpx;
+	height: 204rpx;
+}
+.alltext.data-v-24f06b86 {
+	width: calc(100% - 180rpx);
+}
+.onetitle.data-v-24f06b86 {
+	margin-left: 20rpx;
+	font-weight: bold;
+	font-size: 15px;
+	height: 40rpx;
+	overflow: hidden;
+}
+.onecontent.data-v-24f06b86 {
+	margin-top: 12rpx;
+	margin-left: 20rpx;
+	font-size: 13px;
+	color: #b1b1b1;
+	height: 70rpx;
+	overflow: hidden;
+}
+.oneprice.data-v-24f06b86 {
+	margin-left: 20rpx;
+	color: red;
+	font-weight: bold;
+	font-size: 18px;
+}
+._span.data-v-24f06b86 {
+	font-size: 16px;
+}
+.shopname.data-v-24f06b86 {
+	margin-top: 4rpx;
+	margin-left: 20rpx;
+	font-size: 13px;
+	color: #707070;
+	height: 40rpx;
+	overflow: hidden;
+}
+.back.data-v-24f06b86 {
+	width: 20px;
+	height: 20px;
+	padding-left: 40rpx;
+}
+.topbox.data-v-24f06b86 {
+	display: flex;
+	align-items: center;
+}
+.bottombox.data-v-24f06b86 {
+	position: fixed;
+	bottom: 100rpx;
+	display: flex;
+	right: 0;
+	align-items: center;
+}
+.pricenum.data-v-24f06b86 {
+	color: red;
+	font-weight: bold;
+}
+

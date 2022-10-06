@@ -1,19 +1,28 @@
 <template>
 	<view class="content">
 		<view class="allthings">
-			<view class="oneshoping" v-for="item in newshoppingCartData" :key="item.id" v-if="item.status =='1'">
-				<image :src="item.photo" class="shopimg"></image>
-				<view class="alltext">
-					<view class="onetitle">
-						{{item.title}}
-					</view>
-					<view class="onecontent">
-						{{item.content}}
-					</view>
-					<view class="oneprice">
-						<span>￥</span>{{item.price}}
-					</view>
-				</view>
+			<view class="oneshoping">
+				<u-swipe-action>
+					<u-swipe-action-item v-for="item in newshoppingCartData" :key="item.id" v-if="item.status =='1'"
+						@click="delclick(item.id)" :options="options1">
+						<view class="swipe-action u-border-top u-border-bottom">
+							<view class="swipe-action__content">
+								<image :src="item.photo" class="shopimg"></image>
+								<view class="boxcontent">
+									<view class="onetitle">
+										{{item.title}}
+									</view>
+									<view class="onecontent">
+										{{item.content}}
+									</view>
+									<view class="oneprice">
+										<span>￥</span>{{item.price}}
+									</view>
+								</view>
+							</view>
+						</view>
+					</u-swipe-action-item>
+				</u-swipe-action>
 			</view>
 			<view class="bottombox">
 				<view class="textprice">
@@ -41,7 +50,13 @@
 				// 总价格
 				price: 0,
 				// 购物车所有产品的id（数组）
-				ids: []
+				ids: [],
+				options1: [{
+					text: '删除',
+					style: {
+						backgroundColor: '#f56c6c'
+					}
+				}]
 			}
 		},
 		onLoad() {
@@ -78,6 +93,8 @@
 		methods: {
 			// 获取该用户加入购物车的数据
 			async getShopCart() {
+				this.newshoppingCartData = []
+				this.price = 0
 				const res = await this.$http({
 					url: 'shop/selectshopcart',
 					method: 'POST',
@@ -100,6 +117,7 @@
 							// 在所有产品里面筛选该用户已加到购物车里面的数据
 							this.shoppingCartData.forEach((subitem, index) => {
 								if (subitem.commodityid == item.id) {
+									item.id = subitem.id
 									this.newshoppingCartData.push(item)
 								}
 							})
@@ -110,6 +128,21 @@
 					}
 				}
 			},
+			// 购物车删除商品
+			async delclick(index) {
+				console.log(index)
+				const res = await this.$http({
+					url: 'shop/delcart',
+					method: 'POST',
+					data: {
+						id: index
+					}
+				})
+				console.log(res)
+				if (res.data.code === 200) {
+					this.getShopCart()
+				}
+			},
 			// 跳转到结算页面并将价格传过去
 			pay() {
 				console.log(this.newshoppingCartData)
@@ -117,7 +150,7 @@
 					this.ids.push(item.id)
 				})
 				uni.navigateTo({
-					url: '/pages/pay/pay?types=0&price=' + this.price+'&id='+JSON.stringify(this.ids)
+					url: '/pages/pay/pay?types=0&price=' + this.price + '&id=' + JSON.stringify(this.ids)
 				})
 			}
 		}
@@ -126,7 +159,6 @@
 
 <style scoped>
 	.allthings {
-		margin-top: 20rpx;
 		background-color: #fff;
 		padding: 30rpx;
 		border-radius: 10px;
@@ -141,8 +173,23 @@
 	}
 
 	.oneshoping {
-		display: flex;
-		margin-top: 30rpx;
+		/* display: flex; */
+		/* margin-top: 30rpx;
+		box-shadow: 5px 5px 10px #efeded, -5px -5px 10px #f6f6f6;
+		border-radius: 10px; */
+	}
+
+	::v-deep .swipe-action__content {
+		display: flex !important;
+		width: 100% !important;
+	}
+	
+	.boxcontent {
+		width: calc(100% - 120px);
+	}
+
+	uni-image {
+		overflow: initial !important;
 	}
 
 	.shopimg {
@@ -160,6 +207,7 @@
 		font-size: 15px;
 		height: 40rpx;
 		overflow: hidden;
+		margin-top: 10rpx;
 	}
 
 	.onecontent {
@@ -190,6 +238,17 @@
 		height: 40rpx;
 		overflow: hidden;
 	}
+	
+	::v-deep .u-swipe-action-item__right__button {
+		border-radius: 10px !important;
+		margin-top: 5px !important;
+	}
+	
+	::v-deep .swipe-action {
+		border: 0.5px solid #e7e7e7 !important;
+		margin-top: 5px !important;
+		border-radius: 10px !important;
+	}
 
 	.back {
 		width: 20px;
@@ -213,5 +272,25 @@
 	.pricenum {
 		color: red;
 		font-weight: bold;
+	}
+
+	.u-page {
+		padding: 0;
+	}
+
+	.u-demo-block__title {
+		padding: 10px 0 2px 15px;
+	}
+
+	.swipe-action {
+		&__content {
+			padding: 25rpx 0;
+
+			&__text {
+				font-size: 15px;
+				color: $u-main-color;
+				padding-left: 30rpx;
+			}
+		}
 	}
 </style>

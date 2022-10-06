@@ -11,13 +11,13 @@
 		</view>
 		<view class="subcontent">
 			{{itemdata.content}}
-		</view> 
+		</view>
 	</view>
 </template>
 
 <script>
 	export default {
-		onLoad(option){
+		onLoad(option) {
 			console.log(JSON.parse(option.item))
 			this.itemdata = JSON.parse(option.item)
 		},
@@ -26,33 +26,37 @@
 				itemdata: ''
 			}
 		},
-		methods: {
-		}
+		methods: {}
 	}
 </script>
 
 <style scoped>
-.title {
-	font-size: 18px;
-	text-align: center;
-}
+	.title {
+		font-size: 17px;
+		text-align: center;
+		margin-top: 10px;
+		margin-bottom: 15px;
+	}
 
-.datetime {
-	margin-left: 10px;
-	font-size: 15px;
-	color: #5d5d5d;
-}
+	.datetime {
+		margin-left: 10px;
+		font-size: 15px;
+		color: #5d5d5d;
+		margin-bottom: 10px;
+	}
 
-image {
-	width: 100%;
-}
+	image {
+		width: 100%;
+		border-radius: 15px;
+	}
 
-.content{
-	padding: 10px;
-	font-size: 15px;
-}
+	.content {
+		padding: 10px;
+		font-size: 15px;
+	}
 
-.subcontent {
-	color: #656565;
-}
+	.subcontent {
+		color: #656565;
+		margin-top: 20px;
+	}
 </style>

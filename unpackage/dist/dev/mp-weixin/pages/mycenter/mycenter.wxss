@@ -1,0 +1,107 @@
+
+.stat.data-v-0a9fd7a6 {
+	background-color: #def9a0;
+	position: fixed;
+	z-index: 1;
+	height: 25px; /* --status-bar-height系统状态栏高度 */
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+.content.data-v-0a9fd7a6 {
+	background-color: #f7f7f7;
+	height: 100% !important;
+}
+.topuser.data-v-0a9fd7a6 {
+	position: relative;
+	margin-top: 50rpx;
+	display: flex;
+	align-items: center;
+	background: linear-gradient(135deg, #def9a0 50%, #d4ed9b);
+	height: 250rpx;
+}
+.photo.data-v-0a9fd7a6 {
+	width: 135rpx;
+	height: 135rpx;
+	border-radius: 50%;
+	margin-left: 100rpx;
+	border: 1px solid #6C8E1E;
+}
+.rightp.data-v-0a9fd7a6 {
+	margin-left: 50rpx;
+	display: flex;
+	flex-direction: column;
+}
+.nickname.data-v-0a9fd7a6 {}
+.introduction.data-v-0a9fd7a6 {
+	font-size: 12px;
+	color: #3e3e3e;
+}
+.edit.data-v-0a9fd7a6 {
+	position: absolute;
+	right: 10px;
+}
+.menus.data-v-0a9fd7a6 {
+	margin: 30rpx auto 0;
+	border-radius: 10px;
+	width: 95%;
+	background-color: #fff;
+	height: 150rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+.subcontent.data-v-0a9fd7a6 {
+	margin: 30rpx auto 0;
+	border-radius: 10px;
+	width: 95%;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+}
+.out.data-v-0a9fd7a6 {
+	margin: 30rpx auto 0;
+	border-radius: 10px;
+	width: 95%;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+}
+.oneitem.data-v-0a9fd7a6 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.subicon.data-v-0a9fd7a6 {
+	width: 50rpx;
+	height: 50rpx;
+	margin-bottom: 10rpx;
+}
+.subtext.data-v-0a9fd7a6 {
+	font-size: 12px;
+	color: #282828;
+}
+.twoitem.data-v-0a9fd7a6 {
+	display: flex;
+	align-items: center;
+	height: 110rpx;
+	padding: 0 40rpx;
+	border-bottom: 1px solid #e5e5e5;
+}
+.subtwophoto.data-v-0a9fd7a6 {
+	width: 44rpx;
+	height: 44rpx;
+	margin-right: 30rpx;
+}
+.subtwotext.data-v-0a9fd7a6 {
+	font-size: 15px;
+}
+.zhanwei.data-v-0a9fd7a6 {
+	z-index: -1;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 500px;
+	background-color: #f7f7f7;
+}
+

@@ -125,5 +125,9 @@
 		height: 20px;
 		padding-right: 40rpx;
 	}
+	
+	.passwordbox {
+		padding: 25px;
+	}
 
 </style>

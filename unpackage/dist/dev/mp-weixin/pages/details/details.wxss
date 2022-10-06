@@ -1,0 +1,122 @@
+.stat.data-v-39cbb4e8 {
+  background-color: #f7f7f7;
+  position: fixed;
+  z-index: 1;
+  height: 25px;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+.content.data-v-39cbb4e8 {
+  background-color: #f7f7f7;
+  height: 100%;
+}
+.subcontent.data-v-39cbb4e8 {
+  width: 90%;
+  margin: 25rpx auto 0;
+  background-color: #fff;
+  border-radius: 20rpx;
+}
+.back.data-v-39cbb4e8 {
+  width: 20px;
+  height: 20px;
+  padding-left: 40rpx;
+}
+.sc.data-v-39cbb4e8 {
+  width: 20px;
+  height: 20px;
+}
+.zhanwei.data-v-39cbb4e8 {
+  width: 20px;
+  height: 20px;
+  padding-right: 40rpx;
+}
+.topmenu.data-v-39cbb4e8 {
+  display: flex;
+  justify-content: space-between;
+}
+.topimg.data-v-39cbb4e8 {
+  margin-top: 20rpx;
+  width: 100%;
+  height: 500rpx;
+}
+.oneprice.data-v-39cbb4e8 {
+  margin-left: 20rpx;
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+}
+.onetitle.data-v-39cbb4e8 {
+  margin-left: 20rpx;
+  font-weight: bold;
+  font-size: 15px;
+  height: 40rpx;
+  overflow: hidden;
+}
+.onecontent.data-v-39cbb4e8 {
+  margin-top: 40rpx;
+  margin-left: 20rpx;
+  font-size: 15px;
+  color: #2b2b2b;
+}
+.bottom.data-v-39cbb4e8 {
+  position: fixed;
+  bottom: 8rpx;
+  display: flex;
+  right: 20rpx;
+}
+.lefticon.data-v-39cbb4e8 {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 16rpx;
+}
+.rightbox.data-v-39cbb4e8 {
+  display: flex;
+  align-items: center;
+}
+._span.data-v-39cbb4e8 {
+  font-size: 15px;
+}
+.shopname.data-v-39cbb4e8 {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-top: 20rpx;
+  color: #424242;
+  margin-left: 20rpx;
+}
+.onebox.data-v-39cbb4e8 {
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  width: 160rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  padding: 20rpx;
+  border-top-left-radius: 50rpx;
+  border-bottom-left-radius: 50rpx;
+  background-color: #ff9800;
+}
+.twobox.data-v-39cbb4e8 {
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  width: 160rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  padding: 20rpx;
+  border-top-right-radius: 50rpx;
+  border-bottom-right-radius: 50rpx;
+  background-color: #ff5722;
+}
+.zhanwei1.data-v-39cbb4e8 {
+  z-index: -1;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 500px;
+  background-color: #f7f7f7;
+}
+

@@ -48,7 +48,7 @@
 				console.log(item)
 				const subitem = JSON.stringify(item)
 				uni.navigateTo({
-					url: "/pages/infoshow/infoshow?item="+subitem
+					url: "/pages/infoshow/infoshow?item=" + subitem
 				})
 			}
 		}
@@ -63,6 +63,10 @@
 
 	.oneitem {
 		display: flex;
+		box-shadow: 5px 5px 10px #efeded, -5px -5px 10px #f6f6f6;
+		margin: 10px;
+		border-radius: 10px;
+		padding: 5px;
 	}
 
 	.rightbox {

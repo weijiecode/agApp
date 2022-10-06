@@ -52,12 +52,13 @@
 					data: {
 						username: this.username,
 						password: this.password
-					}
+					} 
 				})
 				if (res.data.code === 200) {
 					// 将该用户id存储到缓存中
 					uni.setStorageSync('userId', res.data.data.id);
 					uni.setStorageSync('address', res.data.data.address);
+					uni.setStorageSync('show', true);
 					uni.switchTab({
 						url: "/pages/index/index"
 					})

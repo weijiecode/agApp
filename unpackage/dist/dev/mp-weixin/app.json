@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/register/register",
+    "pages/shopping/shopping",
+    "pages/mycenter/mycenter",
+    "pages/personupdata/personupdata",
+    "pages/details/details",
+    "pages/search/search",
+    "pages/pay/pay",
+    "pages/collect/collect",
+    "pages/attention/attention",
+    "pages/address/address",
+    "pages/setting/setting"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/home1.png",
+        "selectedIconPath": "static/home.png"
+      },
+      {
+        "pagePath": "pages/shopping/shopping",
+        "text": "购物车",
+        "iconPath": "static/shopping1.png",
+        "selectedIconPath": "static/shopping.png"
+      },
+      {
+        "pagePath": "pages/mycenter/mycenter",
+        "text": "我的",
+        "iconPath": "static/mycenter1.png",
+        "selectedIconPath": "static/mycenter.png"
+      }
+    ],
+    "borderStyle": "black",
+    "backgroundColor": "#F8F8FB",
+    "selectedColor": "#6C8E1E"
+  },
+  "usingComponents": {}
+}

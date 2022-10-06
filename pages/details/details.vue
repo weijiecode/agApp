@@ -20,9 +20,9 @@
 				<u-button @click="btnattention" style="margin-left: 6rpx;width: 110rpx;" size="mini" shape="circle" color="#6C8E1E" plain
 					:text="isattention"></u-button>
 			</view>
-			<view class="onecontent">
-				{{content}}
-			</view>
+		</view>
+		<view class="subcontent1">
+			{{content}}
 		</view>
 		<view class="bottom">
 			<view class="rightbox">
@@ -280,6 +280,19 @@
 	}
 
 	.subcontent {
+		padding: 20px 0;
+		box-shadow: 5px 5px 10px #efeded, -5px -5px 10px #f6f6f6;
+		width: 90%;
+		margin: 25rpx auto 0;
+		background-color: #fff;
+		border-radius: 20rpx;
+	}
+	
+	.subcontent1 {
+		line-height: 30px;
+		padding: 20px 10px;
+		box-sizing: border-box;
+		box-shadow: 5px 5px 10px #efeded, -5px -5px 10px #f6f6f6;
 		width: 90%;
 		margin: 25rpx auto 0;
 		background-color: #fff;

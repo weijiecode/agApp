@@ -1,0 +1,63 @@
+
+.stat.data-v-6cfe335c {
+	background-color: #f7f7f7;
+	position: fixed;
+	z-index: 1;
+	height: 25px; /* --status-bar-height系统状态栏高度 */
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+.topmenu.data-v-6cfe335c {
+	display: flex;
+	justify-content: space-between;
+}
+.back.data-v-6cfe335c {
+	width: 20px;
+	height: 20px;
+	padding-left: 40rpx;
+}
+.zhanwei.data-v-6cfe335c {
+	width: 20px;
+	height: 20px;
+	padding-right: 40rpx;
+}
+.oneshoping.data-v-6cfe335c {
+	display: flex;
+	margin-top: 30rpx;
+}
+.shopimg.data-v-6cfe335c {
+	width: 240rpx;
+	height: 204rpx;
+}
+.alltext.data-v-6cfe335c {
+	width: calc(100% - 180rpx);
+}
+.onetitle.data-v-6cfe335c {
+	margin-left: 20rpx;
+	font-weight: bold;
+	font-size: 15px;
+	height: 40rpx;
+	overflow: hidden;
+}
+.onecontent.data-v-6cfe335c {
+	margin-top: 12rpx;
+	margin-left: 20rpx;
+	font-size: 13px;
+	color: #b1b1b1;
+	height: 70rpx;
+	overflow: hidden;
+}
+.oneprice.data-v-6cfe335c {
+	margin-left: 20rpx;
+	color: red;
+	font-weight: bold;
+	font-size: 18px;
+}
+._span.data-v-6cfe335c {
+	font-size: 16px;
+}
+.listbox.data-v-6cfe335c {
+	margin-top: 20px;
+}
+
