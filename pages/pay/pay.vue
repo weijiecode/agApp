@@ -6,15 +6,26 @@
 			<p>支付</p>
 			<view class="zhanwei"></view>
 		</view>
-		<view class="pay">
+		<!-- 无优惠券 -->
+		<view v-if="!isprice" class="pay">
 			<p class="title">需支付金额</p>
-			<p class="subtitle">￥{{price}}</p>
-			<u--input
-			    placeholder="输入备注"
-			    border="bottom"
-			    clearable
-				v-model="remark"
-			  ></u--input>
+			<p class="subtitle">￥{{(price*1).toFixed(2)}}</p>
+			<u--input class="remark" placeholder="输入备注" border="bottom" clearable v-model="remark"></u--input>
+			<u-button style="width:80%;margin-top: 20px;" type="success" text="立即支付" @click="topay"></u-button>
+		</view>
+		<!-- 有优惠券 -->
+		<view v-if="isprice" class="pay">
+			<p class="title">需支付金额</p>
+			<p style="text-decoration: line-through;color: #545454;" class="subtitle">￥{{(price*1).toFixed(2)}}</p>
+			<div class="bothbox">
+				<div class="leftbox"><span class="discount">减</span>助农补贴</div>
+				<div class="rightbox">-￥5</div>
+			</div>
+			<div class="endprice">
+				<span class="heji">合计&nbsp;&nbsp;￥</span>
+				<span class="price">{{(price*1 - 5).toFixed(2)}}</span>
+			</div>
+			<u--input class="remark" placeholder="输入备注" border="bottom" clearable v-model="remark"></u--input>
 			<u-button style="width:80%;margin-top: 20px;" type="success" text="立即支付" @click="topay"></u-button>
 		</view>
 		<!-- 提示信息 -->
@@ -41,7 +52,8 @@
 				// 产品id
 				id: '',
 				// 购物车传参过来的数组id
-				ids: []
+				ids: [],
+				isprice: ''
 			}
 		},
 		onLoad(option) {
@@ -56,6 +68,7 @@
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight
 			this.userid = uni.getStorageSync('userId');
 			this.address = uni.getStorageSync('address');
+			this.getDiscount()
 		},
 		methods: {
 			// 返回到购物车
@@ -70,8 +83,35 @@
 					uni.navigateBack()
 				}
 			},
+			// 查询是否已经领取优惠券
+			async getDiscount() {
+				const res = await this.$http({
+					url: 'shop/selectprice',
+					method: 'POST',
+					data: {
+						id: this.userid
+					}
+				})
+				if(res.data.data[0].discount){
+					this.isprice = true
+				}else {
+					this.isprice = false
+				}
+			},
+			async btnprice() {
+				const res = await this.$http({
+					url: 'shop/addprice',
+					method: 'POST',
+					data: {
+						id: this.userid,
+						discount: ''
+					}
+				})
+				console.log(res.data)
+			},
 			// 支付
 			async topay() {
+				this.btnprice()
 				// 如果从购物车点击的支付则循环遍历存储支付记录
 				if (this.types === '0') {
 					this.ids.forEach(async item => {
@@ -182,5 +222,50 @@
 		font-size: 24px;
 		margin-top: 20px;
 		font-weight: bold;
+	}
+
+	.discount {
+		width: 10px;
+		height: 10px;
+		color: white;
+		background-color: red;
+		border-radius: 2px;
+		margin-left: 25px;
+		font-size: 14px;
+		padding: 3px;
+		margin-right: 5px;
+
+	}
+
+	.remark {
+		padding: 6px 9px;
+		margin-left: 25px;
+		margin-right: 25px;
+		margin-top: 25px;
+	}
+
+	.bothbox {
+		margin-top: 20px;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.rightbox {
+		margin-right: 25px;
+		font-size: 19px;
+		color: red;
+	}
+
+	.endprice {
+		display: flex;
+		justify-content: end;
+		margin-right: 25px;
+		margin-top: 20px;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	.price {
+		font-size: 22px;
 	}
 </style>

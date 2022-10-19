@@ -70,7 +70,7 @@
 			<view @click="btnsetting" class="twoitem" style="border-bottom: 1px solid #fff;">
 				<image src="/static/shezhi.png" class="subtwophoto"></image>
 				<view class="subtwotext">
-					设置
+					修改密码
 				</view>
 			</view>
 		</view>

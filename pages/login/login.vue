@@ -11,7 +11,7 @@
 			<view class="allbtn">
 				<view class="leftbtn" @click="showmsg">
 					忘记密码？
-				</view>
+				</view> 
 				<view class="rightbtn" @click="register">
 					注册账号
 				</view>
@@ -36,7 +36,7 @@
 			// 忘记密码提示
 			showmsg() {
 				this.$refs.uNotify.show({
-					message: '请联系管理员',
+					message: '请联系管理员QQ：1317106661',
 					type: 'primary',
 					color: '#ffffff',
 					bgColor: '',

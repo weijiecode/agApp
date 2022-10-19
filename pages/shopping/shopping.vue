@@ -26,7 +26,7 @@
 			</view>
 			<view class="bottombox">
 				<view class="textprice">
-					合计：<span class="pricenum">￥{{price}}</span>
+					合计：<span class="pricenum">￥{{(price).toFixed(2)}}</span>
 				</view>
 				<u-button style="margin-left: 6rpx;width: 320rpx;" shape="circle" color="#ff5722" text="结算"
 					@click="pay"></u-button>
